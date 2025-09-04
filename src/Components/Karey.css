@@ -1,10 +1,14 @@
-/* Base styles for body and container */
+/* Box sizing for consistency */
+* {
+  box-sizing: border-box;
+}
 
+/* Reset & base body styles */
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background: #000; /* Dark mode background */
+  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,11 +16,11 @@ body {
   transition: background-color 0.4s ease;
 }
 
-/* Container - default dark mode glassmorphism */
+/* Weather container */
 .weather-container {
-  width: 95%;
+  width: 100%;
   max-width: 950px;
-  margin: 30px;
+  margin: 20px;
   padding: 20px;
   text-align: center;
   color: #eee;
@@ -29,13 +33,7 @@ body {
   transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-@supports not (backdrop-filter: blur(12px)) {
-  .weather-container {
-    background: rgba(30, 30, 30, 0.95);
-  }
-}
-
-/* Light theme overrides */
+/* Light theme override */
 .weather-container.light-theme {
   background: rgba(255, 255, 255, 0.8);
   color: #222;
@@ -43,64 +41,70 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* Body background changes on theme */
+/* Theme-aware background */
 .weather-container.light-theme ~ body,
 .weather-container.light-theme body {
   background: #f0f0f0;
 }
 
-/* Toggle button styles */
+/* Toggle button */
 #toggleThemeBtn {
   margin: 15px 0 30px 0;
-  padding: 8px 20px;
+  padding: 10px 20px;
   font-size: 1rem;
   border-radius: 25px;
   border: 2px solid #74ebd5;
   background: transparent;
   color: inherit;
   cursor: pointer;
+  width: 100%;
+  max-width: 300px;
   transition: background-color 0.3s, border-color 0.3s;
-  user-select: none;
 }
 
-/* Dark mode button hover */
+/* Toggle hover */
 .weather-container:not(.light-theme) #toggleThemeBtn:hover {
   background-color: #2193b0;
   border-color: #2193b0;
   color: #fff;
 }
-
-/* Light mode button hover */
 .weather-container.light-theme #toggleThemeBtn:hover {
   background-color: #74ebd5;
   border-color: #74ebd5;
   color: #222;
 }
 
-/* Search bar styling */
+/* ======================= */
+/* 📱 Mobile-Optimized Form */
+/* ======================= */
 form {
-  margin-bottom: 30px;
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
   gap: 10px;
-  flex-wrap: wrap;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 form input {
-  width: 220px;
-  padding: 10px 15px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
   font-size: 1rem;
   border-radius: 25px;
   border: 2px solid #74ebd5;
-  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
   background: transparent;
   color: inherit;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
 }
 
 form input:focus {
   border-color: #2193b0;
-  outline: none;
   background: rgba(255, 255, 255, 0.1);
+  outline: none;
 }
 
 .weather-container.light-theme form input {
@@ -110,7 +114,7 @@ form input:focus {
 }
 
 form button {
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-size: 1rem;
   background: #2193b0;
   color: #fff;
@@ -124,7 +128,7 @@ form button:hover {
   background: #176b86;
 }
 
-/* Layout for current weather + recommendation */
+/* Weather and Recommendation Section */
 .current-weather-section {
   display: flex;
   flex-wrap: wrap;
@@ -148,13 +152,10 @@ form button:hover {
   height: auto;
 }
 
-/* Animated gradient border using a wrapper */
 .recommendation-wrapper {
   padding: 4px;
   border-radius: 14px;
-  background: conic-gradient(
-    #f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433
-  );
+  background: conic-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433);
   animation: gradientRotate 4s linear infinite;
 }
 
@@ -167,9 +168,7 @@ form button:hover {
   }
 }
 
-/* Recommendation card styling */
 .recommendation-card {
-  position: relative;
   background: rgba(255, 250, 230, 0.7);
   width: clamp(200px, 30%, 260px);
   padding: 20px;
@@ -181,18 +180,17 @@ form button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   overflow: hidden;
-  animation: bounceIn 1.5s ease-in-out;
   transition: background-color 0.4s, color 0.4s;
+  animation: bounceIn 1.5s ease-in-out;
 }
 
-/* Dark mode recommendation card override */
 .weather-container:not(.light-theme) .recommendation-card {
   background: rgba(102, 82, 0, 0.7);
   color: #fff8c4;
 }
 
-/* Light mode recommendation card override */
 .weather-container.light-theme .recommendation-card {
   background: rgba(255, 250, 230, 0.9);
   color: #665200;
@@ -202,7 +200,6 @@ form button:hover {
   transform: scale(1.03);
 }
 
-/* Watermark text */
 .recommendation-card::after {
   content: "KAREY";
   position: absolute;
@@ -210,14 +207,12 @@ form button:hover {
   right: 12px;
   font-size: 0.9rem;
   color: rgba(66, 66, 66, 0.3);
-  font-family: 'Roboto', sans-serif;
   user-select: none;
 }
 
-/* Animated bounce */
+/* Animation */
 @keyframes bounceIn {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
@@ -225,10 +220,13 @@ form button:hover {
   }
 }
 
-/* Icon pulsing effect */
+.rec-icon {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  margin-bottom: 12px;
+  animation: pulseGlow 2s infinite;
+}
 @keyframes pulseGlow {
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(102, 82, 0, 0.7);
   }
@@ -238,46 +236,33 @@ form button:hover {
   }
 }
 
-.rec-icon {
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  margin-bottom: 12px;
-  animation: pulseGlow 2s infinite;
-}
 .rec-text {
   font-weight: 700;
 }
 
-/* "Loading..." text style with animated dots */
+/* Loading text */
 .loading-text {
-  font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
   font-weight: 500;
   color: #262626;
-  letter-spacing: 1px;
   position: relative;
+  letter-spacing: 1px;
 }
+
 .loading-text::after {
   content: '...';
   position: absolute;
-  opacity: 0;
   right: -20px;
   animation: dotPulse 1.5s infinite steps(3, end);
 }
+
 @keyframes dotPulse {
-  0%,
-  20% {
-    opacity: 0;
-  }
-  40%,
-  60% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  0%, 20% { opacity: 0; }
+  40%, 60% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-/* 5-Day Forecast cards */
+/* Forecast */
 .forecast {
   display: flex;
   gap: 15px;
@@ -285,6 +270,7 @@ form button:hover {
   justify-content: center;
   margin-bottom: 40px;
 }
+
 .forecast-day {
   background: #e3f6f5;
   border-radius: 10px;
@@ -294,42 +280,5 @@ form button:hover {
   color: #084c61;
   font-weight: 600;
   text-align: center;
-  transition: background-color 0.3s;
-}
-.forecast-day:hover {
-  background-color: #c4e0e5;
-}
-.forecast-day img {
-  width: clamp(50px, 8vw, 70px);
-  height: auto;
-  margin: 10px 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .current-weather-section {
-    flex-direction: column;
-    align-items: center;
-  }
-  .forecast {
-    flex-direction: column;
-    align-items: center;
-  }
-  .forecast-day {
-    width: 90%;
-    max-width: 300px;
-    margin-bottom: 15px;
-  }
-}
-
-@media (max-width: 400px) {
-  form input {
-    width: 150px;
-  }
-  form button {
-    padding: 10px 15px;
-  }
-  .forecast-day {
-    flex: 0 0 120px;
-  }
+  transition: background-color 
 }
